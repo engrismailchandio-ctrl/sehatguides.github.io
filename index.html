@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GuideConnect — Healthcare Navigation Pakistan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:#0B2545; --teal:#1B8C8C; --teal-light:#22AFAF;
+  --cream:#F7F3EE; --gold:#D4850A; --gold-light:#F0A830;
+  --white:#FFFFFF; --gray:#6B7280; --light-gray:#E5E7EB;
+  --shadow:0 4px 24px rgba(11,37,69,0.12);
+  --shadow-lg:0 12px 48px rgba(11,37,69,0.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);overflow-x:hidden;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(11,37,69,0.97);backdrop-filter:blur(12px);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;}
+.nav-logo span{color:var(--gold-light);}
+.nav-links{display:flex;gap:8px;}
+.nav-btn{padding:8px 18px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;border:none;transition:all .2s;}
+.nav-btn.outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.3);}
+.nav-btn.outline:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.nav-btn.solid{background:var(--teal);color:var(--white);}
+.nav-btn.solid:hover{background:var(--teal-light);}
+.nav-btn.gold{background:var(--gold);color:var(--white);}
+.nav-btn.gold:hover{background:var(--gold-light);}
+
+/* VIEWS */
+.view{display:none;min-height:100vh;}
+.view.active{display:block;}
+
+/* HERO */
+#view-landing{background:var(--navy);}
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 60px 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(27,140,140,.25) 0%,transparent 60%),radial-gradient(ellipse at 10% 80%,rgba(212,133,10,.15) 0%,transparent 50%);}
+.hero-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(var(--white) 1px,transparent 1px),linear-gradient(90deg,var(--white) 1px,transparent 1px);background-size:60px 60px;}
+.hero-content{position:relative;max-width:660px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(27,140,140,.2);border:1px solid rgba(27,140,140,.4);color:var(--teal-light);padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:500;margin-bottom:28px;letter-spacing:.5px;text-transform:uppercase;}
+.hero-badge::before{content:'●';font-size:.5rem;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.hero h1{font-size:clamp(2.8rem,5vw,4rem);color:var(--white);line-height:1.1;margin-bottom:24px;}
+.hero h1 em{color:var(--gold-light);font-style:normal;}
+.hero p{color:rgba(255,255,255,.7);font-size:1.05rem;line-height:1.7;margin-bottom:40px;max-width:520px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{padding:13px 28px;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.93rem;cursor:pointer;border:none;transition:all .25s;}
+.btn-teal{background:var(--teal);color:#fff;box-shadow:0 4px 20px rgba(27,140,140,.4);}
+.btn-teal:hover{background:var(--teal-light);transform:translateY(-2px);}
+.btn-gold{background:var(--gold);color:#fff;box-shadow:0 4px 20px rgba(212,133,10,.35);}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35);}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);}
+
+/* HERO STATS */
+.hero-stats{position:absolute;right:80px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:18px;}
+.stat-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);border-radius:12px;padding:18px 22px;text-align:center;min-width:140px;animation:floatIn .6s ease forwards;opacity:0;}
+.stat-card:nth-child(1){animation-delay:.2s;}
+.stat-card:nth-child(2){animation-delay:.4s;}
+.stat-card:nth-child(3){animation-delay:.6s;}
+@keyframes floatIn{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold-light);}
+.stat-label{color:rgba(255,255,255,.6);font-size:.75rem;margin-top:4px;}
+
+/* SECTIONS */
+.section{padding:80px 60px;}
+.section-light{background:var(--white);}
+.section-cream{background:var(--cream);}
+.section-navy{background:var(--navy);}
+.section-header{text-align:center;margin-bottom:52px;}
+.section-header h2{font-size:2.5rem;margin-bottom:12px;}
+.section-header p{color:var(--gray);font-size:1rem;max-width:540px;margin:0 auto;line-height:1.7;}
+.tag{display:inline-block;background:rgba(27,140,140,.1);color:var(--teal);font-size:.73rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:4px;margin-bottom:14px;}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;}
+.feature-card{background:var(--cream);border-radius:14px;padding:30px 26px;border:1px solid var(--light-gray);transition:all .3s;position:relative;overflow:hidden;}
+.feature-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--teal);transition:height .3s;}
+.feature-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px);}
+.feature-card:hover::after{height:100%;}
+.feature-icon{width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--teal),var(--teal-light));display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:18px;}
+.feature-card h3{font-size:1.15rem;margin-bottom:8px;}
+.feature-card p{color:var(--gray);font-size:.88rem;line-height:1.6;}
+
+/* HOW IT WORKS */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));position:relative;}
+.steps::before{content:'';position:absolute;top:40px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--teal),var(--gold));z-index:0;}
+.step{text-align:center;position:relative;z-index:1;padding:0 14px;}
+.step-num{width:78px;height:78px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;border:3px solid var(--teal);box-shadow:0 0 0 6px rgba(27,140,140,.1);}
+.step h4{font-size:1rem;margin-bottom:8px;}
+.step p{color:var(--gray);font-size:.84rem;line-height:1.6;}
+
+/* HOSPITALS */
+.hospitals-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:780px;margin:0 auto;}
+.hosp-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:30px;color:#fff;transition:all .3s;}
+.hosp-card:hover{background:rgba(255,255,255,.11);transform:translateY(-3px);}
+.hosp-card h3{font-size:1.25rem;margin-bottom:8px;color:var(--gold-light);}
+.hosp-card p{color:rgba(255,255,255,.65);font-size:.88rem;line-height:1.6;}
+.hosp-meta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+.hosp-tag{font-size:.73rem;padding:4px 10px;border-radius:20px;background:rgba(27,140,140,.25);color:var(--teal-light);border:1px solid rgba(27,140,140,.3);}
+
+/* AUTH FORMS */
+#view-patient-register,#view-guide-register,#view-patient-login,#view-guide-login{
+  background:linear-gradient(135deg,var(--navy) 0%,#142d55 100%);
+  display:flex;align-items:center;justify-content:center;padding:80px 20px 40px;
+}
+.auth-box{background:#fff;border-radius:20px;padding:44px 40px;width:100%;max-width:520px;box-shadow:var(--shadow-lg);}
+.auth-box h2{font-size:1.9rem;margin-bottom:5px;}
+.sub{color:var(--gray);font-size:.88rem;margin-bottom:28px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--navy);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:1.5px solid var(--light-gray);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--navy);background:var(--cream);transition:border-color .2s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--teal);background:#fff;}
+.radio-group{display:flex;gap:10px;flex-wrap:wrap;}
+.radio-opt{display:flex;align-items:center;gap:7px;padding:9px 14px;border:1.5px solid var(--light-gray);border-radius:8px;cursor:pointer;font-size:.86rem;transition:all .2s;flex:1;}
+.radio-opt:hover{border-color:var(--teal);}
+.radio-opt input{width:auto;}
+.auth-footer{margin-top:16px;text-align:center;font-size:.86rem;color:var(--gray);}
+.auth-footer a{color:var(--teal);cursor:pointer;font-weight:600;}
+.btn-full{width:100%;padding:13px;font-size:.93rem;}
+.alert{padding:11px 15px;border-radius:8px;font-size:.86rem;margin-bottom:18px;display:none;}
+.alert.success{background:#ECFDF5;color:#065F46;border:1px solid #A7F3D0;}
+.alert.error{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA;}
+
+/* DEMO PANELS */
+.demo-panel{background:#FFF8EC;border:1.5px solid #F0A830;border-radius:10px;padding:13px 15px;margin-top:14px;}
+.demo-panel-title{font-size:.75rem;font-weight:700;color:#92400E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+.demo-panel.green-panel{background:#F0FDF4;border-color:#6EE7B7;}
+.demo-panel.green-panel .demo-panel-title{color:#065F46;}
+.demo-row{display:flex;gap:10px;flex-wrap:wrap;}
+.demo-btn{flex:1;padding:10px 12px;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.85rem;transition:all .2s;}
+.demo-btn.teal{background:var(--teal);color:#fff;}
+.demo-btn.gold{background:var(--gold);color:#fff;}
+.demo-btn.teal:hover{background:var(--teal-light);}
+.demo-btn.gold:hover{background:var(--gold-light);}
+
+/* DASHBOARDS */
+#view-patient-dash{background:var(--cream);padding-top:70px;}
+#view-guide-dash{background:var(--cream);padding-top:70px;}
+.dash-header{background:var(--navy);color:#fff;padding:38px 60px 78px;position:relative;overflow:hidden;}
+.dash-header::before{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(27,140,140,.12);}
+.guide-header{background:linear-gradient(135deg,#0F3052,#1A5E80);color:#fff;padding:38px 60px 78px;position:relative;overflow:hidden;}
+.dash-title{font-family:'Cormorant Garamond',serif;font-size:1.75rem;margin-bottom:4px;}
+.dash-sub{color:rgba(255,255,255,.65);font-size:.9rem;}
+.dash-body{padding:0 60px 60px;margin-top:-38px;display:grid;grid-template-columns:1.2fr .85fr;gap:26px;align-items:start;}
+.guide-dash-body{padding:0 60px 60px;margin-top:-38px;display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;}
+.card{background:#fff;border-radius:16px;padding:26px;box-shadow:var(--shadow);}
+.card h3{font-size:1.15rem;margin-bottom:18px;padding-bottom:13px;border-bottom:1px solid var(--light-gray);}
+
+/* SLOTS */
+.slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+.slot{padding:9px 6px;border:1.5px solid var(--light-gray);border-radius:8px;text-align:center;cursor:pointer;font-size:.78rem;transition:all .2s;line-height:1.3;}
+.slot:hover{border-color:var(--teal);background:rgba(27,140,140,.05);}
+.slot.selected{border-color:var(--teal);background:rgba(27,140,140,.12);color:var(--teal);font-weight:600;}
+.slot.booked{background:var(--light-gray);color:var(--gray);cursor:not-allowed;opacity:.55;}
+
+/* REQUEST STATUS CARDS */
+.status-card{border-radius:11px;padding:18px;margin-bottom:14px;border:1.5px solid;}
+.status-pending{background:#FFFBEB;border-color:#FDE68A;color:#92400E;}
+.status-accepted{background:#ECFDF5;border-color:#6EE7B7;color:#065F46;}
+.status-completed{background:#EFF6FF;border-color:#BFDBFE;color:#1E40AF;}
+.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;animation:blink 2s infinite;}
+.dot-yellow{background:#F59E0B;}.dot-green{background:#10B981;}.dot-blue{background:#3B82F6;}
+.req-info{font-size:.83rem;margin-top:7px;line-height:1.9;}
+
+/* GUIDE REQUEST ITEMS */
+.request-item{background:#fff;border-radius:11px;padding:18px 20px;margin-bottom:12px;border:1.5px solid var(--light-gray);display:flex;justify-content:space-between;align-items:center;gap:12px;transition:all .3s;}
+.request-item:hover{box-shadow:var(--shadow);}
+.request-item.frozen{background:#FFF5F5;border-color:#FECACA;}
+.req-details h4{font-size:.93rem;margin-bottom:4px;}
+.req-details span{font-size:.8rem;color:var(--gray);display:block;margin-top:2px;}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.72rem;font-weight:600;}
+.badge-frozen{background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;}
+.badge-accepted{background:#ECFDF5;color:#065F46;border:1px solid #6EE7B7;}
+.btn-accept{background:var(--teal);color:#fff;border:none;padding:9px 18px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.83rem;white-space:nowrap;transition:all .2s;flex-shrink:0;}
+.btn-accept:hover{background:var(--teal-light);}
+.btn-accept:disabled{background:#D1D5DB;color:#9CA3AF;cursor:not-allowed;}
+
+/* TRACKING */
+.tracking-box{background:var(--navy);border-radius:12px;overflow:hidden;height:270px;}
+#trackCanvas{width:100%;height:100%;}
+.track-legend{display:flex;gap:14px;margin-top:10px;font-size:.79rem;}
+.legend-item{display:flex;align-items:center;gap:6px;}
+.legend-dot{width:9px;height:9px;border-radius:50%;}
+.track-info{background:rgba(11,37,69,.85);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:12px 15px;color:#fff;font-size:.83rem;margin-top:10px;line-height:1.7;}
+.eta{font-size:1.4rem;font-family:'Cormorant Garamond',serif;color:var(--gold-light);font-weight:700;}
+
+/* ONLINE BADGE */
+.online-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.2);color:#6EE7B7;border:1px solid rgba(16,185,129,.3);border-radius:20px;padding:4px 12px;font-size:.76rem;font-weight:500;}
+.online-dot{width:7px;height:7px;border-radius:50%;background:#10B981;animation:blink 1.5s infinite;}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--navy);color:#fff;padding:14px 20px;border-radius:12px;box-shadow:var(--shadow-lg);z-index:9999;transform:translateY(110px);opacity:0;transition:all .35s;max-width:330px;border-left:4px solid var(--teal);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.toast-alert{border-left-color:var(--gold);}
+.toast-title{font-weight:600;font-size:.88rem;margin-bottom:2px;}
+.toast-msg{font-size:.8rem;color:rgba(255,255,255,.72);}
+
+/* DEMO INFO BANNER */
+.demo-info-bar{background:rgba(240,168,48,.14);border:1px solid rgba(240,168,48,.35);border-radius:10px;padding:11px 15px;font-size:.82rem;color:rgba(255,255,255,.85);margin-top:16px;}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:36px 20px;color:var(--gray);}
+.empty-state .icon{font-size:2.2rem;margin-bottom:10px;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{padding:90px 22px 50px;flex-direction:column;}
+  .hero-stats{position:static;transform:none;flex-direction:row;flex-wrap:wrap;margin-top:36px;}
+  .section{padding:56px 22px;}
+  .dash-body,.guide-dash-body{grid-template-columns:1fr;padding:0 20px 36px;}
+  .dash-header,.guide-header{padding:36px 22px 72px;}
+  .hospitals-grid,.form-row{grid-template-columns:1fr;}
+  nav{padding:13px 18px;}
+  .steps::before{display:none;}
+  .steps{grid-template-columns:1fr 1fr;gap:24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav>
+  <div class="nav-logo" onclick="showView('landing')">🏥 Guide<span>Connect</span></div>
+  <div class="nav-links" id="navLinks">
+    <button class="nav-btn outline" onclick="showView('patient-login')">Patient Login</button>
+    <button class="nav-btn solid"   onclick="showView('patient-register')">Register Patient</button>
+    <button class="nav-btn gold"    onclick="showView('guide-login')">Guide Portal</button>
+  </div>
+</nav>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">
+  <div class="toast-title" id="toastTitle"></div>
+  <div class="toast-msg"   id="toastMsg"></div>
+</div>
+
+<!-- ==================================================== -->
+<!-- LANDING PAGE                                         -->
+<!-- ==================================================== -->
+<div class="view active" id="view-landing">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🟢 Now Serving Karachi &amp; Lahore</div>
+      <h1>Your Trusted <em>Hospital Guide</em> — Every Step of the Way</h1>
+      <p>We connect elderly patients, wheelchair users, and rural visitors traveling to Karachi &amp; Lahore with certified, compassionate hospital guides — available on-demand.</p>
+      <div class="hero-btns">
+        <button class="btn btn-teal"  onclick="showView('patient-register')">Book a Guide →</button>
+        <button class="btn btn-gold"  onclick="showView('guide-register')">Become a Guide</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">How It Works</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Partner Hospitals</div></div>
+      <div class="stat-card"><div class="stat-num">24/7</div><div class="stat-label">Guide Availability</div></div>
+      <div class="stat-card"><div class="stat-num">Free</div><div class="stat-label">For All Patients</div></div>
+    </div>
+  </div>
+
+  <!-- WHO WE SERVE -->
+  <div class="section section-light">
+    <div class="section-header">
+      <div class="tag">Who We Serve</div>
+      <h2>Healthcare Navigation for <em>Everyone</em></h2>
+      <p>Navigating a large hospital in an unfamiliar city is stressful. We remove that burden for the most vulnerable patients.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">👴</div><h3>Elderly Patients</h3><p>Senior citizens who need help moving through large corridors, finding departments, and communicating with staff.</p></div>
+      <div class="feature-card"><div class="feature-icon">♿</div><h3>Wheelchair Users</h3><p>Patients requiring wheelchair assistance, guided by trained staff who know every accessible route.</p></div>
+      <div class="feature-card"><div class="feature-icon">🚌</div><h3>Rural Visitors</h3><p>Patients traveling from interior Sindh, Punjab, or KPK who are unfamiliar with metro hospital systems.</p></div>
+      <div class="feature-card"><div class="feature-icon">📍</div><h3>Live Tracking</h3><p>Real-time location updates so families know exactly where the guide and patient are at all times.</p></div>
+      <div class="feature-card"><div class="feature-icon">🔒</div><h3>Instant Locking</h3><p>First guide to accept a request is locked in — just like Careem &amp; Yango — no double assignments ever.</p></div>
+      <div class="feature-card"><div class="feature-icon">⚡</div><h3>Simultaneous Broadcast</h3><p>Your request goes to all available guides at once. Fastest response guaranteed.</p></div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section section-cream" id="how-it-works">
+    <div class="section-header">
+      <div class="tag">Process</div>
+      <h2>How GuideConnect Works</h2>
+      <p>From request to hospital — four simple steps.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h4>Register &amp; Login</h4><p>Create your patient account in under 2 minutes with your name and contact details.</p></div>
+      <div class="step"><div class="step-num">2</div><h4>Select Hospital &amp; Time</h4><p>Choose your hospital, pick a date, and select your preferred time slot.</p></div>
+      <div class="step"><div class="step-num">3</div><h4>Guide is Assigned</h4><p>Your request broadcasts to all free guides simultaneously. First to accept is locked in.</p></div>
+      <div class="step"><div class="step-num">4</div><h4>Track &amp; Arrive Safely</h4><p>Track your guide live and get notified when they reach your pickup point.</p></div>
+    </div>
+  </div>
+
+  <!-- PARTNER HOSPITALS -->
+  <div class="section section-navy">
+    <div class="section-header">
+      <div class="tag" style="background:rgba(212,133,10,.2);color:var(--gold-light);">Partner Hospitals</div>
+      <h2 style="color:#fff;">Currently Operating At</h2>
+      <p style="color:rgba(255,255,255,.6);">Our guides are deployed at both hospitals. Expansion coming soon.</p>
+    </div>
+    <div class="hospitals-grid">
+      <div class="hosp-card">
+        <div style="font-size:2.4rem;margin-bottom:14px;">🏥</div>
+        <h3>Aga Khan University Hospital</h3>
+        <p>Stadium Road, Karachi. One of Pakistan's most complex hospital campuses — our guides know every floor.</p>
+        <div class="hosp-meta"><span class="hosp-tag">Karachi</span><span class="hosp-tag">Multi-building</span><span class="hosp-tag">Active</span></div>
+      </div>
+      <div class="hosp-card">
+        <div style="font-size:2.4rem;margin-bottom:14px;">🏥</div>
+        <h3>Mayo Hospital</h3>
+        <p>Nila Gumbad, Lahore. Historic government hospital serving thousands daily — navigate it with confidence.</p>
+        <div class="hosp-meta"><span class="hosp-tag">Lahore</span><span class="hosp-tag">High Traffic</span><span class="hosp-tag">Active</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section section-light" style="text-align:center;">
+    <div class="tag">Get Started</div>
+    <h2 style="font-size:2.3rem;margin-bottom:12px;">Ready to Book Your Guide?</h2>
+    <p style="color:var(--gray);margin-bottom:34px;max-width:460px;margin-left:auto;margin-right:auto;">Join GuideConnect today — completely free. Your safety at Pakistan's best hospitals is our mission.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-teal" onclick="showView('patient-register')">Register as Patient</button>
+      <button class="btn btn-gold" onclick="showView('guide-register')">Join as Guide</button>
+    </div>
+  </div>
+
+  <footer style="background:var(--navy);color:rgba(255,255,255,.45);text-align:center;padding:26px;font-size:.82rem;">
+    © 2025 GuideConnect — SEE Competition Presentation | Karachi, Pakistan
+  </footer>
+</div>
+
+<!-- ==================================================== -->
+<!-- PATIENT REGISTER                                     -->
+<!-- ==================================================== -->
+<div class="view" id="view-patient-register">
+  <div class="auth-box">
+    <h2>Create Patient Account</h2>
+    <p class="sub">Register to book a hospital guide</p>
+    <div class="alert" id="preg-alert"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Full Name</label><input id="pr-name" placeholder="Muhammad Ali"/></div>
+      <div class="form-group"><label>Phone Number</label><input id="pr-phone" type="tel" placeholder="03001234567"/></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>CNIC</label><input id="pr-cnic" placeholder="42201-XXXXXXX-X"/></div>
+      <div class="form-group"><label>Age</label><input id="pr-age" type="number" placeholder="65"/></div>
+    </div>
+    <div class="form-group"><label>City / Origin</label><input id="pr-city" placeholder="e.g. Larkana, Sindh"/></div>
+    <div class="form-group">
+      <label>Patient Condition</label>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="pr-condition" value="elderly" checked/> 👴 Elderly</label>
+        <label class="radio-opt"><input type="radio" name="pr-condition" value="wheelchair"/> ♿ Wheelchair</label>
+        <label class="radio-opt"><input type="radio" name="pr-condition" value="rural"/> 🚌 Rural</label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Password</label><input id="pr-pass" type="password" placeholder="••••••"/></div>
+      <div class="form-group"><label>Confirm Password</label><input id="pr-pass2" type="password" placeholder="••••••"/></div>
+    </div>
+    <button class="btn btn-teal btn-full" onclick="registerPatient()">Create Account →</button>
+    <div class="auth-footer">Already registered? <a onclick="showView('patient-login')">Log In</a> &nbsp;|&nbsp; <a onclick="showView('landing')">← Home</a></div>
+  </div>
+</div>
+
+<!-- ==================================================== -->
+<!-- PATIENT LOGIN                                        -->
+<!-- ==================================================== -->
+<div class="view" id="view-patient-login">
+  <div class="auth-box">
+    <h2>Patient Login</h2>
+    <p class="sub">Access your guide booking portal</p>
+    <div class="alert" id="plogin-alert"></div>
+    <div class="form-group"><label>Phone Number</label><input id="pl-phone" type="tel" placeholder="03001234567"/></div>
+    <div class="form-group"><label>Password</label><input id="pl-pass" type="password" placeholder="••••••"/></div>
+    <button class="btn btn-teal btn-full" onclick="loginPatient()">Log In →</button>
+
+    <!-- DEMO QUICK LOGIN -->
+    <div class="demo-panel green-panel" style="margin-top:18px;">
+      <div class="demo-panel-title">⚡ Demo Quick Login</div>
+      <button class="demo-btn teal" onclick="demoLoginPatient()">👤 Login as Usama (Demo Patient)</button>
+    </div>
+
+    <div class="auth-footer" style="margin-top:14px;">No account? <a onclick="showView('patient-register')">Register</a> &nbsp;|&nbsp; <a onclick="showView('landing')">← Home</a></div>
+  </div>
+</div>
+
+<!-- ==================================================== -->
+<!-- GUIDE REGISTER                                       -->
+<!-- ==================================================== -->
+<div class="view" id="view-guide-register">
+  <div class="auth-box" style="max-width:540px;">
+    <h2>Guide Registration</h2>
+    <p class="sub">Join GuideConnect as a certified hospital guide</p>
+    <div class="alert" id="greg-alert"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Full Name</label><input id="gr-name" placeholder="Ahmad Khan"/></div>
+      <div class="form-group"><label>Phone</label><input id="gr-phone" type="tel" placeholder="03001234567"/></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>CNIC</label><input id="gr-cnic" placeholder="42201-XXXXXXX-X"/></div>
+      <div class="form-group"><label>Experience (yrs)</label><input id="gr-exp" type="number" placeholder="2"/></div>
+    </div>
+    <div class="form-group"><label>Languages Spoken</label><input id="gr-lang" placeholder="Urdu, Sindhi, English"/></div>
+    <div class="form-group">
+      <label>Wheelchair Training</label>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="gr-wc" value="yes" checked/> ✅ Yes, trained</label>
+        <label class="radio-opt"><input type="radio" name="gr-wc" value="no"/> ❌ Not yet</label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Password</label><input id="gr-pass" type="password" placeholder="••••••"/></div>
+      <div class="form-group"><label>Confirm Password</label><input id="gr-pass2" type="password" placeholder="••••••"/></div>
+    </div>
+    <button class="btn btn-gold btn-full" onclick="registerGuide()">Register as Guide →</button>
+    <div class="auth-footer">Already a guide? <a onclick="showView('guide-login')">Log In</a> &nbsp;|&nbsp; <a onclick="showView('landing')">← Home</a></div>
+  </div>
+</div>
+
+<!-- ==================================================== -->
+<!-- GUIDE LOGIN                                          -->
+<!-- ==================================================== -->
+<div class="view" id="view-guide-login">
+  <div class="auth-box">
+    <h2>Guide Login</h2>
+    <p class="sub">Access your guide dashboard</p>
+    <div class="alert" id="glogin-alert"></div>
+    <div class="form-group"><label>Phone Number</label><input id="gl-phone" type="tel" placeholder="03001234567"/></div>
+    <div class="form-group"><label>Password</label><input id="gl-pass" type="password" placeholder="••••••"/></div>
+    <button class="btn btn-gold btn-full" onclick="loginGuide()">Log In →</button>
+
+    <!-- DEMO QUICK LOGIN -->
+    <div class="demo-panel" style="margin-top:18px;">
+      <div class="demo-panel-title">⚡ Demo Quick Login — Select Guide</div>
+      <div class="demo-row">
+        <button class="demo-btn teal" onclick="demoLoginGuide('Muhammad Ismail')">🧑‍⚕️ Muhammad Ismail</button>
+        <button class="demo-btn gold" onclick="demoLoginGuide('Wareesha Khan')">🧑‍⚕️ Wareesha Khan</button>
+      </div>
+      <div style="font-size:.74rem;color:#92400E;margin-top:8px;">Password for manual login: <strong>demo123</strong></div>
+    </div>
+
+    <div class="auth-footer" style="margin-top:14px;">Not registered? <a onclick="showView('guide-register')">Register</a> &nbsp;|&nbsp; <a onclick="showView('landing')">← Home</a></div>
+  </div>
+</div>
+
+<!-- ==================================================== -->
+<!-- PATIENT DASHBOARD                                    -->
+<!-- ==================================================== -->
+<div class="view" id="view-patient-dash">
+  <div class="dash-header">
+    <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:12px;position:relative;">
+      <div>
+        <div class="dash-title">Welcome, <span id="pd-name">Patient</span> 👋</div>
+        <div class="dash-sub" id="pd-condition">Your health matters to us</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div class="online-badge"><div class="online-dot"></div> System Online</div>
+        <button class="nav-btn outline" onclick="logout()">Logout</button>
+      </div>
+    </div>
+    <div class="demo-info-bar">
+      💡 <strong style="color:var(--gold-light);">Demo flow:</strong> Select a hospital, date &amp; time slot, then click <strong>Send Request</strong>. Both guides will be notified simultaneously on their screens.
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <!-- LEFT: Booking Form -->
+    <div>
+      <div class="card">
+        <h3>📋 Request a Guide</h3>
+        <div class="alert" id="req-alert"></div>
+        <div class="form-group">
+          <label>Select Hospital</label>
+          <select id="req-hospital">
+            <option value="">-- Choose Hospital --</option>
+            <option value="Aga Khan University Hospital, Karachi">🏥 Aga Khan University Hospital — Karachi</option>
+            <option value="Mayo Hospital, Lahore">🏥 Mayo Hospital — Lahore</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Visit Date</label><input type="date" id="req-date"/></div>
+        <div class="form-group">
+          <label>Select Time Slot</label>
+          <div class="slots-grid" id="slotsGrid">
+            <div style="grid-column:1/-1;color:var(--gray);font-size:.83rem;text-align:center;padding:10px;">Select a hospital and date first</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Special Notes (optional)</label>
+          <textarea id="req-notes" rows="2" placeholder="e.g. Needs wheelchair, coming from Sukkur…"></textarea>
+        </div>
+        <button class="btn btn-teal btn-full" onclick="submitRequest()">📤 Send Request to All Guides</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: My Requests + Tracking -->
+    <div>
+      <div class="card" style="margin-bottom:22px;">
+        <h3>📂 My Requests</h3>
+        <div id="myRequests"><div class="empty-state"><div class="icon">📭</div><p>No requests yet.</p></div></div>
+      </div>
+      <div class="card">
+        <h3>📡 Live Tracking</h3>
+        <div id="trackingSection"><div class="empty-state"><div class="icon">🗺️</div><p>Tracking activates once a guide accepts your request.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================================== -->
+<!-- GUIDE DASHBOARD                                      -->
+<!-- ==================================================== -->
+<div class="view" id="view-guide-dash">
+  <div class="guide-header">
+    <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:12px;position:relative;">
+      <div>
+        <div class="dash-title" style="color:#fff;">Guide Dashboard — <span id="gd-name">Guide</span></div>
+        <div class="dash-sub">Real-time patient requests</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div class="online-badge"><div class="online-dot"></div> Available</div>
+        <button class="nav-btn outline" onclick="logout()">Logout</button>
+      </div>
+    </div>
+    <div class="demo-info-bar">
+      💡 <strong style="color:var(--gold-light);">Live Demo:</strong> When Usama sends a request, it appears below instantly on <strong>both</strong> guide screens. First to click <strong>Accept</strong> wins — the other sees a 🔒 Locked card immediately.
+    </div>
+  </div>
+
+  <div class="guide-dash-body">
+    <!-- LEFT: Incoming Requests -->
+    <div>
+      <div class="card">
+        <h3>📨 Incoming Patient Requests</h3>
+        <p style="color:var(--gray);font-size:.82rem;margin:-10px 0 16px;">New requests appear here in real time. First to accept is assigned.</p>
+        <div id="guideRequests"><div class="empty-state"><div class="icon">🔔</div><p>No pending requests right now.</p></div></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Accepted Jobs + Navigation -->
+    <div>
+      <div class="card" style="margin-bottom:22px;">
+        <h3>✅ My Accepted Jobs</h3>
+        <div id="guideAccepted"><div class="empty-state"><div class="icon">📋</div><p>No accepted jobs yet.</p></div></div>
+      </div>
+      <div class="card">
+        <h3>🗺️ Live Navigation</h3>
+        <div id="guideTracking"><div class="empty-state"><div class="icon">📍</div><p>Navigation starts after you accept a request.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================================== -->
+<!-- SCRIPTS — order matters: Firebase → db.js → app.js  -->
+<!-- ==================================================== -->
+
+<!-- Firebase SDK (only loads if you configure db.js) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<!-- Our two files -->
+<script src="db.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
